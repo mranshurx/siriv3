@@ -19,25 +19,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Automatically install the Gradle Wrapper script and jar on the server
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           generate-job-summary: false
 
-      # Generate gradlew executable
       - name: Generate Gradle Wrapper
         run: gradle wrapper
 
-      # Make gradlew executable
       - name: Make Gradlew Executable
         run: chmod +x gradlew
 
-      # Build the APK using the newly created gradlew
+      # Added --stacktrace flag to print the exact reason for failure
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --stacktrace
 
-      # Upload the APK to downloadable Artifacts
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
